@@ -1,52 +1,38 @@
 format long;
-m = 4;
+m = 10;
 fun = @(x) sin(x);
 a = 0;
 b = pi;
 
 tocke = fun(linspace(a,b,m+1));
-h = (b - a)/m; % (b - a)/m
+h = (b - a)/m;
+
 pribTrapez = trapez(h,tocke)
 pribSimpson = simpson(h,tocke)
 pribShema = RombergovaShema(fun,m,a,b)
 
 exact = integral(fun,a,b);
-minMTrap = floor(fminsearch(@(m) mTrap(m,exact,1e-2,fun,a,b),100,optimset('TolX',.1)) + 1)
-minMSimpson = floor(fminsearch(@(m) mSimpson(m,exact,1e-2,fun,a,b),100,optimset('TolX',.1)) + 1)
+errTol = 1e-2;
+for n = 1:100
+	t = fun(linspace(a,b,n+1));
+	g = (b - a)/n;
 
-function d = mTrap(m,goal,tol,f,a,b)
-	m = floor(m);
-	stTock = m + 1;
-	
-	tocke = f(linspace(a,b,stTock));
-	h = (b - a)/m;
-
-
-	d = trapez(h,tocke);
-
-	err = abs(goal - d); 
-	if err < tol
-		d = d + goal;
-	end 
+	err = abs(exact - trapez(g,t));
+	if err < errTol
+		minMTrap = n
+		break;
+	end
 end
 
-function d = mSimpson(m,goal,f,numPoints,a,b)
-	m = floor(m);
-	% m mora biti sod
-	if rem(m,2) == 1
-		m = m + 1
-	end
-	stTock = m + 1;
-	
-	tocke = f(linspace(a,b,stTock));
-	h = (b - a)/m;
+for n = 2:2:100
+	t = fun(linspace(a,b,n+1));
+	g = (b - a)/n;
 
-	d = simpson(h,tocke);
-	
-	err = abs(goal - d); 
-	if err < tol
-		d = d + goal;
-	end 
+	err = abs(exact - simpson(g,t));
+	if err < errTol
+		minMSimpson = n
+		break;
+	end
 end
 
 function Tf = trapez(h,f)
