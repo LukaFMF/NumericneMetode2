@@ -1,0 +1,222 @@
+% REMESOV POSTOPEK
+Iščemo linearni polinom p = a*x+b za aproksimacijo funkcije
+f = @(x) log(x)
+na intervalu [1,2] z začetno množico E = {1,3/2,2}.
+
+% 1.korak:
+a1 =  0.6931471806
+b1 = -0.6637014216
+m1 = -0.0294457589
+
+a1+b1 = 0.0294457589
+
+y1 pri katerem je dosežena neskončna norma:
+y1 = 1.4426907123
+
+% 2.korak:
+a2 =  0.6931471806
+b2 = -0.66331712999
+m2 = -0.02983005057
+
+y2 pri katerem je dosežena neskončna norma:
+y2 = 1.4426907123
+
+napaka = 0.0298300506
+
+% LINEARNI ZLEPEK
+% Vrednosti linearnega zlepka v 11 točkah iz [0,1] za različne m
+
+x = linspace(0,1,11);
+f = @(x) sin(2*pi*x);
+
+1.) 
+m = 4;
+X = linspace(0,1,m+1);
+Y = f(X);
+zx = linzlepek(X,Y,x);
+
+zx =
+
+         0
+    0.4000
+    0.8000
+    0.8000
+    0.4000
+    0.0000
+   -0.4000
+   -0.8000
+   -0.8000
+   -0.4000
+    0.0000
+ 
+
+2.) 
+m = 5;
+X = linspace(0,1,m+1);
+Y = f(X);
+zx = linzlepek(X,Y,x);
+
+zx =
+
+              0
+   0.4755282581
+   0.9510565163
+   0.7694208843
+   0.5877852523
+   0.0000000000
+  -0.5877852523
+  -0.7694208843
+  -0.9510565163
+  -0.4755282581
+   0.0000000000
+
+
+3.) 
+m = 15;
+X = linspace(0,1,m+1);
+Y = f(X);
+zx = linzlepek(X,Y,x);
+
+zx =
+
+              0
+   0.5749407343
+   0.9510565163
+   0.9302736496
+   0.5877852523
+   0.0000000000
+  -0.5877852523
+  -0.9302736496
+  -0.9510565163
+  -0.5749407343
+   0.0000000000
+
+
+% Napake za različne m, kjer interval [0,1] razdelimo na 10^5 delov
+
+x = linspace(0,1,1e5+1);
+f = @(x) sin(2*pi*x);
+
+1.)
+m = 100;
+X = linspace(0,1,m+1);
+
+napaka =
+
+     4.931961515958e-04
+
+2.)
+m = 1000;
+X = linspace(0,1,m+1);
+
+napaka =
+
+     4.93477378971e-06
+
+3.)
+m = 2000;
+X = linspace(0,1,m+1);
+
+napaka =
+
+     1.23369877436e-06
+
+
+
+
+% KUBIČNI ZLEPEK
+% Vrednosti kubičnega zlepka v 11 točkah iz [0,1] za različne m
+
+x = linspace(0,1,11);
+f = @(x) sin(2*pi*x);
+df = @(x) 2*pi*cos(2*pi*x);
+
+1.) 
+m = 4;
+X = linspace(0,1,m+1);
+zx = kubzlepek(X,f(X),df(X),x);
+
+zx =
+
+              0
+   0.5781946711
+   0.9462654825
+   0.9462654825
+   0.5781946711
+              0
+  -0.5781946711
+  -0.9462654825
+  -0.9462654825
+  -0.5781946711
+  -0.0000000000
+ 
+
+2.) 
+m = 5;
+X = linspace(0,1,m+1);
+zx = kubzlepek(X,f(X),df(X),x);
+
+zx =
+
+              0
+   0.5840676149
+   0.9510565163
+   0.9450412526
+   0.5877852523
+   0.0000000000
+  -0.5877852523
+  -0.9450412526
+  -0.9510565163
+  -0.5840676149
+  -0.0000000000
+
+
+3.) 
+m = 15;
+X = linspace(0,1,m+1);
+zx = kubzlepek(X,f(X),df(X),x);
+
+zx =
+
+               0
+   0.58773826596
+   0.9510565163
+   0.9509804908
+   0.5877852523
+   0.0000000000
+  -0.5877852523
+  -0.9509804908
+  -0.9510565163
+  -0.58773826596
+  -0.0000000000
+
+
+% Napake za različne m, kjer interval [0,1] razdelimo na 10^5 delov
+
+x = linspace(0,1,1e5+1);
+f = @(x) sin(2*pi*x);
+df = @(x) 2*pi*cos(2*pi*x);
+
+1.)
+m = 10;
+X = linspace(0,1,m+1);
+
+napaka =
+
+     4.0320773671e-04
+
+2.)
+m = 20;
+X = linspace(0,1,m+1);
+
+napaka =
+
+     2.5013532883e-05
+
+3.)
+m = 50
+X = linspace(0,1,m+1);
+
+napaka =
+
+     6.4922304466e-07
