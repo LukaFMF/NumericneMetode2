@@ -15,12 +15,12 @@ yRK3 = rungeKutta(x,f,y0,RK3_a,RK3_b,RK3_g)
 
 function y = rungeKutta(x,f,y0,alpha,beta,gamma)
 	% Opis:
-	%  Funkcija rungeKutta2 vrne numericno resitev navadne diferencialne enacbe
+	%  Funkcija rungeKutta vrne numericno resitev navadne diferencialne enacbe
 	%  y' = f(x,y) pri pogoju y(x(1)) = y0, ki je izracunana z metodo podana z 
-	% eksplicitno Butcherjevo shemo (alpha,beta,gamma)
+	%  eksplicitno Butcherjevo shemo (alpha,beta,gamma)
 	%
 	% Definicija:
-	%  y = rungeKutta2(x,f,y0,alpha,beta,gamma)
+	%  y = rungeKutta(x,f,y0,alpha,beta,gamma)
 	%
 	% Vhodni podatki:
 	%  x     vrstica delilnih tock,

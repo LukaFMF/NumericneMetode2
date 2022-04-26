@@ -1,37 +1,22 @@
 format long;
 
-RK4_a = [0 1/2 1/2 1];
-RK4_b = [0 0 0 0; 1/2 0 0 0; 0 1/2 0 0; 0 0 1 0];
-RK4_g = [1/6 2/6 2/6 1/6];
+x = 0:.1:.9;
+y2Prime = @(x,y,yPrime) yPrime*y.^2 - y;
+y0 = [1, 0]; % y(0) = 1, y'(0) = 0
 
-alpha = 10;
-beta = 1;
-gamma = 8;
-delta = 1;
-y0 = [2,10];
-
+RK3_a = [0 1/2 1];
+RK3_b = [0 0 0; 1/2 0 0; -1 2 0];
+RK3_g = [1/6 2/3 1/6];
 fs = cell(1,2);
-fs{1} = @(x,Y) alpha*Y(1) - beta*Y(1)*Y(2);
-fs{2} = @(x,Y) delta*Y(1)*Y(2) - gamma*Y(2);
+fs{1} = @(x,Y) Y(2);
+fs{2} = @(x,Y) y2Prime(x,Y(1),Y(2));
+yRK3 = rungeKuttaSistem(x,fs,y0,RK3_a,RK3_b,RK3_g)'
 
-h = .1;
-t = h*(0:50);
 
-% prvi stolpec - pleni, drugi stolpec - plenilci
-yRK4 = rungeKuttaSistem(t,fs,y0,RK4_a,RK4_b,RK4_g)' 
+F = @(x,Y) [Y(2);y2Prime(x,Y(1),Y(2))];
+sol = ode45(F,[0,1],[1,0]); % 2. argument poda interval [0,1]
 
-F = @(t,Y) [fs{1}(t,Y);fs{2}(t,Y)];
-opts = odeset('RelTol',1e-12,'AbsTol',1e-14);
-tocnaRes = ode45(F,[0,5],y0,opts);
-yTocna = deval(tocnaRes,t)'
-
-absNapake = abs(yRK4 - yTocna)
-
-hold on;
-grid on;
-plot(t,yRK4(:,1),"b")
-plot(t,yRK4(:,2),"r")
-hold off;
+Y = deval(sol,x)' % prvi stolpec - vrednsti y, drugi stolpec - vrednosti y' 
 
 function y = rungeKuttaSistem(x,fs,y0,alpha,beta,gamma)
 	% Opis:
@@ -85,3 +70,5 @@ function y = rungeKuttaSistem(x,fs,y0,alpha,beta,gamma)
 		y = [y yPrib];
 	end
 end
+
+

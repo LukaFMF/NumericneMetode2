@@ -107,19 +107,19 @@ y =
 Globalne napake za r = 0,1,2,3,4:
 
 r = 0
-napaka = 0.3431358166
+napaka = 0.3907849913
 
 r = 1
-napaka = 0.0977154550
+napaka = 0.1237558272
 
 r = 2
-napaka = 0.0243187975
+napaka = 0.0306683732
 
 r = 3
-napaka = 0.0061847925
+napaka = 0.0076457559
 
 r = 4
-napaka = 0.0015465705
+napaka = 0.0019095316
 
 
 % 2.NALOGA

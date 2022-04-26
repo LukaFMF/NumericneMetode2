@@ -1,0 +1,104 @@
+% Numerično odvajanje
+
+f = @(x) 1./(x+1);
+odf = @(x) -1/(x + 1)^2;
+x0 = 1/2;
+h = [0.01 0.1 0.15 0.2];
+
+dobljeni priblizki po pravilu (1) pri razmikih, podanih v vrstici h:
+
+   -0.4444444409
+   -0.4444085326
+   -0.4442573887
+   -0.4438286172
+
+tocna vrednost odvoda: odf(x0) = -0.4444444444
+
+napake zgornjih priblizkov:
+
+   1.0e-03 *
+
+   0.0000035124
+   0.0359118006
+   0.1870557426
+   0.6158272412
+
+absolutna vrednost razlike priblizkov dobljenih po pravilu (1) in s premo diferenco pri razmikih, podanih v vrstici h:
+
+   0.00294333717
+   0.02774186598
+   0.04021698466
+   0.05167175446
+
+absolutna vrednost razlike priblizkov dobljenih po pravilu (1) in z obratno diferenco pri razmikih, podanih v vrstici h:
+
+   0.0029828521
+   0.0317819435
+   0.0495697718
+   0.0689918956
+
+absolutna vrednost razlike priblizkov dobljenih po pravilu (1) in s simetricno diferenco pri razmikih, podanih v vrstici h:
+
+   0.0000197575
+   0.0020200388
+   0.0046763936
+   0.0086600706
+
+
+
+
+
+
+
+
+
+% Rombergova metoda za funkcijo f(x) = sin(x) na [0,pi]
+
+f = @(x)sin(x);
+a=0;
+b=pi;
+k=4;
+[p,S] = romberg(f,a,b,k)
+
+p =
+
+   1.9999999946
+
+
+S =
+
+   0.0000000000              0              0               0              0
+   1.5707963268   2.0943951024              0               0              0
+   1.8961188979   2.0045597550   1.9985707318               0              0
+   1.9742316019   2.0002691699   1.9999831309   2.00000554998              0
+   1.9935703438   2.0000165910   1.9999997524   2.00000001629   1.9999999946
+
+
+f = @(x)sin(x);
+a=0;
+b=pi;
+k=2;
+[p,S] = romberg(f,a,b,k)
+
+p =
+
+   1.9985707318
+
+
+S =
+
+   0.0000000000               0              0
+   1.5707963268   2.09439510239              0
+   1.8961188979   2.00455975498   1.9985707318
+
+
+If = integral(f,a,b,'RelTol',1e-10,'AbsTol',1e-14);
+napaka = abs(p-If);
+
+napaka =
+
+   0.0014292682
+
+
+
+
