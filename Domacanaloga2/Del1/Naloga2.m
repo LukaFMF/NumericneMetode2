@@ -19,14 +19,13 @@ function Rf = RombergovaShema(fun,k,a,b)
 		stInt = stInt * 2;
 	end
 
-	shema
 	nova = zeros(1,k + 1);
 	for i = 1:k
 		koef = 2^(2*i);
 		for j = i+1:k + 1
 			nova(j) = (koef*shema(j) - shema(j - 1))/(koef - 1);
 		end
-		shema = nova
+		shema = nova;
 	end
 
 	Rf = shema(end);
